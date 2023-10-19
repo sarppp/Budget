@@ -77,9 +77,9 @@ fontLoader.load('https://cdn.skypack.dev/three@0.129.0/examples/fonts/helvetiker
     particle.position.z = Math.random() * 10 - 5;
   
     particle.velocity = new THREE.Vector3(
-      (Math.random() - 0.5) * 0.02,
-      (Math.random() - 0.5) * 0.02,
-      (Math.random() - 0.5) * 0.02,
+      (Math.random() - 0.5) * 0.1,
+      (Math.random() - 0.5) * 0.1,
+      (Math.random() - 0.5) * 0.1,
     );
   
     scene.add(particle);
@@ -174,10 +174,24 @@ fontLoader.load('https://cdn.skypack.dev/three@0.129.0/examples/fonts/helvetiker
     scene.add(formedParticles);
   }
   
+  let lastTouchTime = 0;
+  const doubleTapDelay = 300; // You can adjust this value as needed
+  
   document.addEventListener("keydown", (event) => {
     if (event.key === "k" || event.key === "K") {
       formParticlesIntoBars();
     }
+  });
+  
+  document.addEventListener("touchstart", (event) => {
+    const currentTime = new Date().getTime();
+    const tapLength = currentTime - lastTouchTime;
+    if (tapLength < doubleTapDelay && tapLength > 0) {
+      // This is a double-tap
+      formParticlesIntoBars();
+      event.preventDefault(); // Prevent the default behavior, like zooming or scrolling
+    }
+    lastTouchTime = currentTime;
   });
   
   for (let i = 0; i < 2000; i++) {
