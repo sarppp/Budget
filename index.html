@@ -5,12 +5,24 @@
     <script src="https://threejs.org/build/three.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pandas-js/0.0.11/pandas.min.js"></script>
-
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
-    body {
-        margin: 0;
-        padding: 0;
-        overflow: hidden;}
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        .centered-container {
+        display: flex;
+        justify-content: flex-start; /* Align content to the left */
+        align-items: center;
+        padding: 200px; /* Add padding to create space around the content */
+        overflow: auto; /* Enable scrolling if the content overflows */
+        transform: scale(0.8); /* Adjust the scale value to your desired zoom level */
+        width: 800%; /* Limit the content width to 80% of the viewport width */
+        margin-left: 50%; /* Add a margin to move the content more to the left */
+        }
     </style>
 
 </head>
