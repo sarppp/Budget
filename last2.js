@@ -7,6 +7,30 @@ import { OrbitControls } from 'https://cdn.skypack.dev/three@0.129.0/examples/js
 const data = [{"Cost":2,"Reason":"Food","count":5},{"Cost":3,"Reason":"Food","count":2},{"Cost":3,"Reason":"Obligatory","count":1},{"Cost":4,"Reason":"Food","count":1},{"Cost":4,"Reason":"Obligatory","count":1},{"Cost":5,"Reason":"Food","count":11},{"Cost":5,"Reason":"Homecare","count":1},{"Cost":6,"Reason":"Food","count":4},{"Cost":7,"Reason":"Food","count":8},{"Cost":7,"Reason":"Obligatory","count":1},{"Cost":8,"Reason":"Food","count":5},{"Cost":8,"Reason":"Travel","count":1},{"Cost":9,"Reason":"Food","count":3},{"Cost":10,"Reason":"Food","count":5},{"Cost":10,"Reason":"Obligatory","count":1},{"Cost":10,"Reason":"Travel","count":1},{"Cost":11,"Reason":"Food","count":1},{"Cost":11,"Reason":"Travel","count":1},{"Cost":12,"Reason":"Food","count":2},{"Cost":12,"Reason":"Travel","count":10},{"Cost":13,"Reason":"Food","count":1},{"Cost":13,"Reason":"Homecare","count":1},{"Cost":14,"Reason":"Food","count":1},{"Cost":15,"Reason":"Food","count":1},{"Cost":15,"Reason":"Obligatory","count":1},{"Cost":16,"Reason":"Health","count":1},{"Cost":18,"Reason":"Food","count":1},{"Cost":18,"Reason":"Homecare","count":1},{"Cost":20,"Reason":"Food","count":1},{"Cost":20,"Reason":"Homecare","count":3},{"Cost":20,"Reason":"Obligatory","count":1},{"Cost":22,"Reason":"Food","count":2},{"Cost":23,"Reason":"Travel","count":3},{"Cost":25,"Reason":"Travel","count":1},{"Cost":35,"Reason":"Obligatory","count":1},{"Cost":40,"Reason":"Food","count":1},{"Cost":50,"Reason":"Food","count":1},{"Cost":56,"Reason":"Travel","count":1},{"Cost":80,"Reason":"Travel","count":1},{"Cost":80,"Reason":"Travel ","count":1},{"Cost":185,"Reason":"Travel","count":1}];
   
 
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+camera.position.set( 5, 0, 20 );
+
+camera.aspect = window.innerWidth / window.innerHeight;
+camera.updateProjectionMatrix();
+
+//RENDERER
+const renderer = new THREE.WebGLRenderer( { antialias: true } );
+renderer.setPixelRatio( window.devicePixelRatio );
+renderer.setSize(innerWidth, innerHeight);
+document.body.appendChild(renderer.domElement);
+renderer.setSize( window.innerWidth, window.innerHeight );
+
+//ORBIT CONTROLS
+const controls = new OrbitControls( camera, renderer.domElement );
+controls.enableDamping = true;
+controls.enableZoom = true;
+controls.target.set(4.5, 0, 4.5);
+controls.enablePan = false;
+controls.maxPolarAngle = Math.PI / 2;
+
+const raycaster = new THREE.Raycaster();
+const mouse = new THREE.Vector2();
 
 
 // Group the data by "Reason" and calculate the sum of "Cost" and "count"
@@ -32,7 +56,7 @@ const totalcost = data.reduce((acc, item) => acc + item.Cost * item.count, 0);
 console.log(`Total days between the two dates: ${totalcost}`);
 
 const startDate = new Date('2023-09-12'); // Specify your start date
-const endDate = new Date('2023-10-19');   // Specify your end date
+const endDate = new Date('2023-10-20');   // Specify your end date
 const totalDays = getDaysBetweenDates(startDate, endDate);
 
 // Now, 'totalDays' holds the total number of days between the two dates
@@ -41,30 +65,6 @@ console.log(`Total days between the two dates: ${totalDays}`);
 // Define colors for the top 5 reasons
 const topReasonColors = [0xff0000, 0x00ff00, 0x0000ff, 0xff00ff, 0xffff00];
 
-const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-camera.position.set( 5, 0, 15 );
-
-camera.aspect = window.innerWidth / window.innerHeight;
-camera.updateProjectionMatrix();
-
-//RENDERER
-const renderer = new THREE.WebGLRenderer( { antialias: true } );
-renderer.setPixelRatio( window.devicePixelRatio );
-renderer.setSize(innerWidth, innerHeight);
-document.body.appendChild(renderer.domElement);
-renderer.setSize( window.innerWidth, window.innerHeight );
-
-//ORBIT CONTROLS
-const controls = new OrbitControls( camera, renderer.domElement );
-controls.enableDamping = true;
-controls.enableZoom = true;
-controls.target.set(4.5, 0, 4.5);
-controls.enablePan = false;
-controls.maxPolarAngle = Math.PI / 2;
-
-const raycaster = new THREE.Raycaster();
-const mouse = new THREE.Vector2();
 
 
 const textLabels = [];
@@ -85,9 +85,9 @@ fontLoader.load('https://cdn.skypack.dev/three@0.129.0/examples/fonts/helvetiker
     const particleMaterial = new THREE.MeshBasicMaterial({ color: color });
     const particle = new THREE.Mesh(particleGeometry, particleMaterial);
   
-    particle.position.x = Math.random() * 10 - 5;
-    particle.position.y = Math.random() * 10 - 5;
-    particle.position.z = Math.random() * 10 - 5;
+    particle.position.x = Math.random() * 20 - 5;
+    particle.position.y = Math.random() * 20 - 5;
+    particle.position.z = Math.random() * 20 - 5;
   
     particle.velocity = new THREE.Vector3(
       (Math.random() - 0.5) * 0.1,
